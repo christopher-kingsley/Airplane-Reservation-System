@@ -79,12 +79,13 @@ public class ReservationSystem extends JFrame {
 
     public ReservationSystem() {
         setTitle("Greensboro Airlines Reservation System");
-        setSize(500, 500);
+        setSize(550, 550);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
 
-        JPanel mainPanel = new JPanel(new GridLayout(9, 2, 5, 5));
-        mainPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        JPanel mainPanel = new JPanel(new GridLayout(9, 2, 10, 10));
+        mainPanel.setBackground(new Color(40, 60, 100));
+        mainPanel.setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15));
 
         customerNameField = new JTextField(10);
         String[] flightNumbers = {"GOS 1 - Greensboro to Newark", "GOS 2 - Newark to Greensboro"};
@@ -104,33 +105,48 @@ public class ReservationSystem extends JFrame {
         timeBox = new JComboBox<>(generateAvailableHours());
 
         JButton reserveButton = new JButton("Reserve Ticket");
-        
+        reserveButton.setBackground(new Color(60, 90, 140));
+        reserveButton.setForeground(Color.WHITE);
+        reserveButton.setFocusPainted(false);
+
         outputPane = new JTextPane();
         outputPane.setEditable(false);
         outputPane.setFont(new Font("Arial", Font.BOLD, 16));
-        outputPane.setBackground(new Color(240, 240, 240));
+        outputPane.setBackground(new Color(230, 230, 250));
         outputPane.setBorder(BorderFactory.createCompoundBorder(
                 BorderFactory.createLineBorder(Color.DARK_GRAY, 1),
                 BorderFactory.createEmptyBorder(10, 10, 10, 10)
         ));
         outputPane.setPreferredSize(new Dimension(250, 150));
 
-        mainPanel.add(new JLabel("Customer Name:"));
+        JLabel[] labels = {
+            new JLabel("Customer Name:"), new JLabel("Flight Number:"),
+            new JLabel("Class:"), new JLabel("Seat Number:"),
+            new JLabel("Snack (Business Only):"), new JLabel("Date:"),
+            new JLabel("Time:")
+        };
+
+        for (JLabel label : labels) {
+            label.setForeground(Color.WHITE);
+        }
+
+        mainPanel.add(labels[0]);
         mainPanel.add(customerNameField);
-        mainPanel.add(new JLabel("Flight Number:"));
+        mainPanel.add(labels[1]);
         mainPanel.add(flightNumberBox);
-        mainPanel.add(new JLabel("Class:"));
+        mainPanel.add(labels[2]);
         mainPanel.add(classBox);
-        mainPanel.add(new JLabel("Seat Number:"));
+        mainPanel.add(labels[3]);
         mainPanel.add(seatBox);
-        mainPanel.add(new JLabel("Snack (Business Only):"));
+        mainPanel.add(labels[4]);
         mainPanel.add(snackBox);
-        mainPanel.add(new JLabel("Date:"));
+        mainPanel.add(labels[5]);
         mainPanel.add(dateBox);
-        mainPanel.add(new JLabel("Time:"));
+        mainPanel.add(labels[6]);
         mainPanel.add(timeBox);
 
         JPanel buttonPanel = new JPanel();
+        buttonPanel.setBackground(new Color(40, 60, 100));
         buttonPanel.add(reserveButton);
 
         add(mainPanel, BorderLayout.CENTER);
@@ -180,9 +196,9 @@ public class ReservationSystem extends JFrame {
             String time = (String) timeBox.getSelectedItem();
 
             if (ticketClass.equals("Economy") && !snack.equals("None")) {
-                JOptionPane.showMessageDialog(ReservationSystem.this, 
-                    "Error: Snacks are only available for Business class tickets.", 
-                    "Snack Selection Error", 
+                JOptionPane.showMessageDialog(ReservationSystem.this,
+                    "Error: Snacks are only available for Business class tickets.",
+                    "Snack Selection Error",
                     JOptionPane.ERROR_MESSAGE);
                 return;
             }
@@ -200,3 +216,4 @@ public class ReservationSystem extends JFrame {
         new ReservationSystem();
     }
 }
+
